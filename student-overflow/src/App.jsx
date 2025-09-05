@@ -1,16 +1,19 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
-import Login from './routes/Login.jsx'
-import Home from './routes/Home.jsx'
-import { getSession } from './utils/auth.js'
+// src/App.jsx
+import { Routes, Route } from "react-router-dom"
+import Login from "./routes/Login"
+import Signup from "./pages/Signup"
+import Home from "./routes/Home"
+import "./styles.css";
 
 
-export default function App() {
-const session = getSession()
-return (
-<Routes>
-<Route path="/" element={<Login />} />
-<Route path="/home" element={session ? <Home /> : <Navigate to="/" replace />} />
-<Route path="*" element={<Navigate to={session ? '/home' : '/'} replace />} />
-</Routes>
-)
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/home" element={<Home />} />
+    </Routes>
+  )
 }
+
+export default App

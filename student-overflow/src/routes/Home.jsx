@@ -1,66 +1,104 @@
-import { useMemo, useState } from 'react'
-import Navbar from '../components/Navbar.jsx'
-import Sidebar from '../components/Sidebar.jsx'
-import QuestionCard from '../components/QuestionCard.jsx'
-import AskQuestionModal from '../components/AskQuestionModal.jsx'
-import { getSession } from '../utils/auth.js'
-import sample from '../data/sampleQuestions.js'
-
+// src/routes/Home.jsx
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { getSession, clearSession } from "../utils/auth.js"
 
 export default function Home() {
-const session = getSession()
-const [query, setQuery] = useState('')
-const [showAsk, setShowAsk] = useState(false)
-const [questions, setQuestions] = useState(sample)
+  const navigate = useNavigate()
+  const [questions, setQuestions] = useState([])
 
+  useEffect(() => {
+    const session = getSession()
+    if (!session) navigate("/")
+    else {
+      // For now, mock questions
+      setQuestions([
+        {
+          id: 1,
+          title: "How do I reverse a linked list in Java without recursion?",
+          description: "I am implementing a singly linked list in Java. I want to reverse it iteratively...",
+          votes: 12,
+          answers: 3,
+          views: 245,
+          tags: ["java", "data-structures"],
+          asked: "2 hours ago",
+        },
+        {
+          id: 2,
+          title: "React useEffect: dependency array confusion with async fetch",
+          description: "When I call fetch inside useEffect, I get repeated calls or stale data...",
+          votes: 7,
+          answers: 1,
+          views: 188,
+          tags: ["react", "javascript", "hooks"],
+          asked: "5 hours ago",
+        },
+        {
+          id: 3,
+          title: "Difference between Interface and Abstract Class in Java with examples",
+          description: "I understand both define contracts, but when should I prefer an interface...",
+          votes: 15,
+          answers: 6,
+          views: 901,
+          tags: ["java", "oop"],
+          asked: "yesterday",
+        },
+      ])
+    }
+  }, [navigate])
 
-const filtered = useMemo(() => {
-const q = query.toLowerCase()
-return questions.filter(x => x.title.toLowerCase().includes(q) || x.tags.some(t => t.toLowerCase().includes(q)))
-}, [query, questions])
+  function handleLogout() {
+    clearSession()
+    navigate("/")
+  }
 
+  return (
+    <div>
+      {/* Header */}
+      <header>
+        <h1>StudentOverflow</h1>
+        <div>
+          <span style={{ marginRight: "1rem" }}>
+            Welcome, {getSession()?.displayName} ({getSession()?.role})
+          </span>
+          <button onClick={handleLogout}>Logout</button>
+        </div>
+      </header>
 
-return (
-<div className="min-h-screen">
-<Navbar query={query} setQuery={setQuery} />
-<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-[220px,1fr,300px] gap-6 mt-6">
-<Sidebar role={session?.role} />
-<main>
-<div className="flex items-center justify-between mb-4">
-<h2 className="text-xl font-semibold">Top Questions</h2>
-<button onClick={() => setShowAsk(true)} className="rounded-xl bg-brand-600 hover:bg-brand-700 text-white px-4 py-2">Ask question</button>
-</div>
-<div className="space-y-3">
-{filtered.map(q => (
-<QuestionCard key={q.id} question={q} />
-))}
-{filtered.length === 0 && (
-<div className="text-sm text-gray-600">No results. Try a different search.</div>
-)}
-</div>
-</main>
-<aside className="space-y-4">
-<div className="bg-white rounded-2xl shadow-soft p-4">
-<h3 className="font-medium mb-2">Mentor Spotlight</h3>
-<p className="text-sm text-gray-600">Verified mentors answer with a <span className="font-semibold">Mentor</span> badge.</p>
-{session?.role === 'mentor' && <p className="mt-2 text-xs text-brand-700">You’re logged in as a mentor. Thank you for helping students!</p>}
-</div>
-<div className="bg-white rounded-2xl shadow-soft p-4">
-<h3 className="font-medium mb-2">Guidelines</h3>
-<ul className="list-disc pl-5 text-sm text-gray-700 space-y-1">
-<li>Search before asking</li>
-<li>Include code and expected output</li>
-<li>Be respectful & specific</li>
-</ul>
-</div>
-</aside>
-</div>
-{showAsk && (
-<AskQuestionModal onClose={() => setShowAsk(false)} onSubmit={(q) => {
-setQuestions(prev => [{...q, id: prev.length + 1, votes: 0, answers: 0, views: 0}, ...prev])
-setShowAsk(false)
-}} />
-)}
-</div>
-)
+      {/* Content */}
+      <main className="container">
+        <h2 style={{ marginBottom: "1rem" }}>Top Questions</h2>
+        <ul className="question-list">
+          {questions.map((q) => (
+            <li key={q.id} className="question-item">
+              <div className="meta">
+                {q.votes} votes • {q.answers} answers • {q.views} views
+              </div>
+              <a href="#" className="question-title">
+                {q.title}
+              </a>
+              <p>{q.description}</p>
+              <div className="meta">
+                {q.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    style={{
+                      background: "#eef",
+                      padding: "2px 6px",
+                      borderRadius: "4px",
+                      marginRight: "0.5rem",
+                      fontSize: "0.8rem",
+                    }}
+                  >
+                    {tag}
+                  </span>
+                ))}
+                <span style={{ float: "right" }}>asked {q.asked}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </main>
+    </div>
+  )
 }
