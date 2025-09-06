@@ -1,19 +1,19 @@
 // src/App.jsx
-import { Routes, Route } from "react-router-dom"
-import Login from "./routes/Login"
-import Signup from "./pages/Signup"
-import Home from "./routes/Home"
-import "./styles.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import Login from "./routes/Login.jsx"
+import Home from "./routes/Home.jsx"
+import AskQuestion from "./routes/AskQuestion.jsx"
+import QuestionDetail from "./routes/QuestionDetail.jsx"
 
-
-function App() {
+export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/home" element={<Home />} />
-    </Routes>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/ask" element={<AskQuestion />} />
+        <Route path="/questions/:id" element={<QuestionDetail />} />
+      </Routes>
+    </Router>
   )
 }
-
-export default App
