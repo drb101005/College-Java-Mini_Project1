@@ -6,7 +6,7 @@ export default [
     tags: ['java', 'data-structures', 'algorithms'],
     votes: 12,
     answers: 3,
-    views: 245,
+    views: 25,
     asked: '2 hours ago'
   },
   {
@@ -16,7 +16,7 @@ export default [
     tags: ['react', 'javascript', 'hooks'],
     votes: 7,
     answers: 1,
-    views: 188,
+    views: 18,
     asked: '5 hours ago'
   },
   {
@@ -26,7 +26,7 @@ export default [
     tags: ['java', 'oop'],
     votes: 15,
     answers: 6,
-    views: 901,
+    views: 91,
     asked: 'yesterday'
   }
 ]

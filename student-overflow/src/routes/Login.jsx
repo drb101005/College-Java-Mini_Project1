@@ -1,80 +1,77 @@
-// src/routes/Login.jsx
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { getSession, setSession } from "../utils/auth.js"
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { getSession, setSession } from "../utils/auth.js";
+import "./Login.css"; // custom CSS
 
 export default function Login() {
-  const navigate = useNavigate()
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState("")
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
-    if (getSession()) navigate("/home")
-  }, [navigate])
+    if (getSession()) navigate("/home");
+  }, [navigate]);
 
   async function handleSubmit(e) {
-    e.preventDefault()
-    setError("")
-    setLoading(true)
+    e.preventDefault();
+    setError("");
+    setLoading(true);
     try {
-      const res = await fetch("/users.json")
-      const data = await res.json()
+      const res = await fetch("/users.json");
+      const data = await res.json();
       const user = data.find(
         (u) => u.username === username && u.password === password
-      )
+      );
       if (!user) {
-        setError("Invalid credentials")
-        return
+        setError("Invalid credentials ❌");
+        return;
       }
-      setSession(user)
-      navigate("/home")
+      setSession({
+        username: user.username,
+        role: user.role,
+        displayName: user.displayName,
+      });
+      navigate("/home");
     } catch (err) {
-      setError("Failed to load users.json")
+      setError("⚠️ Failed to load users.json");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
   return (
-    <div className="container" style={{ maxWidth: "400px", marginTop: "80px" }}>
-      <div className="question-item">
-        <h2 style={{ textAlign: "center", marginBottom: "16px" }}>
-          StudentOverflow Login
-        </h2>
-        <p style={{ fontSize: "0.9rem", marginBottom: "12px" }}>
-          Use <b>student1</b> / <b>mentor1</b> with password <b>123456</b>.
+    <div className="login-container">
+      <div className="login-card">
+        <h1 className="login-title">StudentOverflow</h1>
+        <p className="login-subtitle">
+          Login as <b>student1</b> or <b>mentor1</b><br />
+          Password: <b>123456</b>
         </p>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Username</label>
-            <input
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter username"
-              autoFocus
-              required
-            />
-          </div>
-          <div>
-            <label>Password</label>
-            <input
-              type="password"
-              value={password}
-              placeholder="Enter password"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          {error && (
-            <div style={{ color: "red", fontSize: "0.9rem" }}>{error}</div>
-          )}
-          <button disabled={loading}>
-            {loading ? "Checking…" : "Sign in"}
+
+        <form onSubmit={handleSubmit} className="login-form">
+          <input
+            className="login-input"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Username"
+            autoFocus
+          />
+          <input
+            type="password"
+            className="login-input"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete="current-password"
+          />
+          {error && <div className="login-error">{error}</div>}
+          <button disabled={loading} className="login-button">
+            {loading ? "Checking…" : "Sign In"}
           </button>
         </form>
       </div>
     </div>
-  )
+  );
 }
