@@ -44,9 +44,9 @@ export default function Login() {
   return (
     <div className="login-container">
       <div className="login-card">
-        <h1 className="login-title">StudentOverflow</h1>
+        <h1 className="login-title">Student Overflow</h1>
         <p className="login-subtitle">
-          Login as <b>student1</b> or <b>mentor1</b><br />
+          Login as <b>student-1</b> or <b>mentor-1</b><br />
           Password: <b>123456</b>
         </p>
 
