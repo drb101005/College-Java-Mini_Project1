@@ -1,3 +1,5 @@
+//Page to submit the questions
+//On submitting the questions , it calls for the backend
 // src/routes/AskQuestion.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";

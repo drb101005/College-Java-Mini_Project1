@@ -1,3 +1,7 @@
+//Starts server on express 
+//Connects Sqllite to db
+//defines api routes
+//db.sqlite is auto created locally
 // server.js
 const express = require("express");
 const sqlite3 = require("sqlite3");

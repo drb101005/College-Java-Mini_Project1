@@ -1,3 +1,6 @@
+//Gets questions id's
+//Displays title , tags ,etc
+//Lists the answers
 // src/routes/QuestionDetail.jsx
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";

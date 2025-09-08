@@ -1,3 +1,6 @@
+//Helper function for login
+//setSession(),
+//getSession(),etc
 // src/utils/auth.js
 
 // Save session manually (if needed)

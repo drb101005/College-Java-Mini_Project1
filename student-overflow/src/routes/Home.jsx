@@ -1,3 +1,7 @@
+//Shows questions
+//ask question box
+//each question with its seprate page
+//logout button
 // src/routes/Home.jsx
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";

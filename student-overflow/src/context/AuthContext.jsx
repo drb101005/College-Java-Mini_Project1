@@ -1,3 +1,5 @@
+//Global access
+//Records of the logs
 // src/context/AuthContext.jsx
 import React, { createContext, useState, useEffect } from "react";
 import { apiFetch } from "../api/api";

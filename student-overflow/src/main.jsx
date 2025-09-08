@@ -1,3 +1,4 @@
+//Starting off the page , wraps everythig in the Browser Routes
 // src/main.jsx
 import React from "react"
 import ReactDOM from "react-dom/client"

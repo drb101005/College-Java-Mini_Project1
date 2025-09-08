@@ -1,3 +1,5 @@
+//Checks for apis
+//If correct , routes to the home page
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getSession, setSession } from "../utils/auth.js";

@@ -8,3 +8,12 @@ node server.js
 
 
 for frontend...
+
+Frontend :
+JS(React,React routes,css)
+Backend : 
+JS(Node.js,express)
+Data Base :
+Sql lite
+Styling : 
+CSS/HTML
