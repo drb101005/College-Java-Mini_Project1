@@ -17,7 +17,7 @@ export default function Navbar({ query, setQuery }) {
         {/* Logo + Title */}
         <div className="flex items-center gap-2">
           <img src="/logo.svg" className="w-7 h-7" alt="logo" />
-          <span className="font-semibold">StudentOverflow</span>
+          <span className="font-semibold">Student Discussion Form</span>
         </div>
 
         {/* Nav links */}
